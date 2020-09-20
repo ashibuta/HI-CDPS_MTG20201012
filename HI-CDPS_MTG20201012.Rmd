@@ -2,11 +2,11 @@
 title:  <span style="font-size:12pt">「料紙研究の最新手法と成果」関連データ</span>
 author: <span style="font-size:10pt">渋谷綾子</span> 
 output: 
- html_document: default
  word_document:
     fig_width: 7
     fig_height: 5
     fig_caption: true
+ html_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -14,10 +14,9 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 　このファイルは，2020年10月12日（月）東京大学史料編纂所前近代日本史情報国際センター・画像史料解析センター共同研究会の資料作成に使用したRマークダウンのコードである。  
-　Fig1は、現生標本（イネ，アワ，キビ，ヒエ）と松尾大社社蔵史料で確認された料紙のデンプン粒（イネ，トロロアオイ，種不明）について，Fig2は同じく現生標本と陽明文庫所蔵史料で確認された料紙のデンプン粒（イネ，トロロアオイ，種不明）について，粒径の比較・検討を行い，それぞれの特徴を可視化した。デンプン粒の粒径範囲は標本によって左右されるが（藤本），
-　デンプン粒の粒径範囲は標本によって左右されるが（註21論文），現生標本は渋谷（2010）で計測したデータ（任意で20個抽出）にもとづくものである。松尾大社社蔵史料の料紙におけるデンプン粒は，調査史料90点の撮影箇所における計測結果を用いており，イネ223個，トロロアオイ30個，種不明106個である。陽明文庫所蔵史料の料紙のデンプン粒は，調査史料63点の撮影箇所における計測結果を用いており，イネ329個（函番号11：89個，函番号47：223個，函番号132：17個），トロロアオイ111個（函番号11：49個，函番号47：42個，函番号47：20個），種不明3個（函番号11のみ）である。  
+　Fig1は、現生標本（イネ，アワ，キビ，ヒエ）と松尾大社社蔵史料で確認された料紙のデンプン粒（イネ，トロロアオイ，種不明）について，Fig2は同じく現生標本と陽明文庫所蔵史料で確認された料紙のデンプン粒（イネ，トロロアオイ，種不明）について，粒径の比較・検討を行い，それぞれの特徴を可視化した。デンプン粒の粒径範囲は標本によって左右されるが（藤本1994），現生標本は渋谷（2010）で計測したデータ（任意で20個抽出）にもとづくものである。松尾大社社蔵史料の料紙におけるデンプン粒は，調査史料63点の撮影箇所における計測結果を用いており，イネ223個，トロロアオイ30個，種不明106個である。陽明文庫所蔵史料の料紙のデンプン粒は，調査史料90点の撮影箇所における計測結果を用いており，イネ329個（函番号11：89個，函番号47：223個，函番号132：17個），トロロアオイ111個（函番号11：49個，函番号47：42個，函番号47：20個），種不明3個（函番号11のみ）である。  
 　Fig3は，松尾大社社蔵史料の年代と細胞組織／柔組織，繊維の含有量について，それぞれ撮影1箇所あたりの計測数を表す。2018年度・2019年度の調査史料63点における含有状況であり，松尾大社のすべての史料を網羅しているわけではないことを断っておく。  
-　Fig4は，
+　Fig4～7は松尾大社社蔵史料・陽明文庫所蔵史料におけるデンプン粒，鉱物，細胞組織，繊維の主成分分析である。
 <p>
 
 ```{r, message=FALSE, comment=""}
@@ -30,21 +29,18 @@ library(rmarkdown)
 library(revealjs)
 library(scales)
 library(reshape2)
+library(ggfortify)
 ```
-
+# 現生デンプン粒標本と料紙のデンプン粒の比較
+## 現生デンプン粒標本と松尾大社社蔵史料の料紙に含有されたデンプン粒の粒径比較
 ```{r, message=FALSE, comment=""}
 # Fig1作成のためのCSVファイルの読み取り
 starch <- read_csv("matsuono_ryoshi-starch.csv")
-```
 
-```{r, message=FALSE, comment=""}
 head(starch)　 # データフレームの上6行を表示
 names(starch)  # starchに含まれるすべての変数名
 dim(starch)　  # starchに含まれる観測数と変数の数を表示させる 
-```
 
-```{r, message=FALSE, comment=""}
-# Fig1 現生デンプン粒標本と松尾大社社蔵史料の料紙に含有されたデンプン粒の粒径比較図
 n_fun <- function(x){
 return(data.frame(y = max(x)+3.5, label = paste0("n = ",length(x))))
 }
@@ -63,19 +59,15 @@ ggplot(starch, aes(x = デンプン粒の種類, y = 粒径範囲)) +
 ggsave(file = "fig1.png", dpi = 300) # ファイルの保存
 ```
 
+## 現生デンプン粒標本と陽明文庫所蔵史料の料紙に含有されたデンプン粒の粒径比較
 ```{r, message=FALSE, comment=""}
 # Fig2作成のためのCSVファイルの読み取り
 starch <- read_csv("yomei-starch.csv")
-```
 
-```{r, message=FALSE, comment=""}
 head(starch)　 # データフレームの上6行を表示
 names(starch)  # starchに含まれるすべての変数名
 dim(starch)　  # starchに含まれる観測数と変数の数を表示させる 
-```
 
-```{r, message=FALSE, comment=""}
-# Fig2 現生デンプン粒標本と料紙に含有されたデンプン粒の粒径比較図
 n_fun <- function(x){
 return(data.frame(y = max(x)+2.5, label = paste0("n = ",length(x))))
 }
@@ -93,19 +85,16 @@ ggplot(starch, aes(x = デンプン粒の種類, y = 粒径範囲)) +
 ggsave(file = "fig2.png", dpi = 300) # ファイルの保存
 ```
 
+# 松尾大社社蔵史料の料紙における細胞組織・柔細胞，繊維の時期的変化
+## 細胞組織・柔細胞の含有状況
 ```{r, message=FALSE, comment=""}
-# Fig3作成のためのCSVファイルの読み取り
+# Fig3(1)作成のためのCSVファイルの読み取り
 tissue <- read_csv("matsunoo_tissue-fibre.csv")
-```
 
-```{r, message=FALSE, comment=""}
 head(tissue)　 # データフレームの上6行を表示
 names(tissue)  # tissue-fibreに含まれるすべての変数名
 dim(tissue)　  # tissue-fibreに含まれる観測数と変数の数を表示させる 
-```
 
-```{r, message=FALSE, comment=""}
-# Fig3(1)　松尾大社社蔵史料の年代別にみた細胞組織・柔細胞の含有状況
 ggplot(tissue, aes(x = 西暦, y = 細胞組織)) +
   geom_area(colour = "#005aff", fill ="#005aff", alpha=0.5) + # 網掛け領域付きの折れ線グラフの作成
   scale_x_continuous(breaks = c(1160,1200,1300,1400,1500,1600,1700,1800,1860), 
@@ -116,8 +105,8 @@ ggplot(tissue, aes(x = 西暦, y = 細胞組織)) +
 ggsave(file = "fig3-1.png", width = 6, height = 4, dpi = 300) # ファイルの保存
 ```
 
+## 繊維の含有状況
 ```{r, message=FALSE, comment=""}
-# Fig3(2)　松尾大社社蔵史料の年代別にみた繊維の含有状況
 ggplot(tissue, aes(x = 西暦, y = 繊維)) +
   geom_area(colour = "#005aff", fill ="#005aff", alpha=0.5) + # 網掛け領域付きの折れ線グラフの作成
   scale_x_continuous(breaks = c(1160,1200,1300,1400,1500,1600,1700,1800,1860), 
@@ -126,4 +115,242 @@ ggplot(tissue, aes(x = 西暦, y = 繊維)) +
   labs(x = "史料の年代（西暦）", y = "計測数") + # ラベルの指定
   theme_classic()
 ggsave(file = "fig3-2.png", width = 6, height = 4, dpi = 300) # ファイルの保存
+```
+
+# 松尾大社社蔵史料の料紙におけるデンプン粒，鉱物，細胞組織，繊維の主成分分析
+```{r, message=FALSE, comment=""}
+tbs <- read_csv("matsunoo-compo.csv")  # CSVファイルの読み取り
+tbs # 読み込んだデータ
+
+# 構成物の種類を実数型に変換
+tbs2 <-
+  tbs %>%
+  filter(紙素材 %in% "コウゾ") %>%　　　 # コウゾだけを選択
+  select(デンプン粒,鉱物,細胞組織,繊維,ほか) %>%
+  mutate(
+    デンプン粒 = as.numeric(デンプン粒), # デンプン粒を実数に変換
+    鉱物 = as.numeric(鉱物),　　　　　　 # 鉱物を実数に変換
+    細胞組織 = as.numeric(細胞組織),　　 # 細胞組織を実数に変換
+    繊維 = as.numeric(繊維),　　　　　　 # 繊維を実数に変換
+    ほか = as.numeric(ほか))　　　　　　 # ほか（他の物質）を実数に変換
+
+# 主成分分析を行うパッケージFactoMineRを読み込み，主成分分析を実行
+library(FactoMineR)
+# 主成分分析を実行
+res.pca <- 
+  PCA(tbs2,graph = FALSE)
+
+# 多変量解析の可視化に特化したfactoextraパッケージ
+library(factoextra) 
+# 各主成分の寄与率を描画
+fviz_screeplot(res.pca)
+ggsave(file = "fig4.png", width = 6, height = 4, dpi = 300) # ファイルの保存
+
+# 主成分分析の概要を表示
+summary(res.pca)　
+
+res.pca$eig %>%
+  kable()
+# eigenvaluesは主成分の分散，percentage of variancevは寄与率，cumulative percentage of varianceが累積寄与率を示す。スクリープロットを作成するfviz_screeplot()は，自動的にpercentage of varianceをy値に出力する。
+```
+
+## 主成分1に対する各変数の寄与率を出図
+```{r, message=FALSE, comment=""}
+fviz_contrib(res.pca,  
+             choice = "var",  # 変数ごとの寄与率(ctr)
+             axes = 1,  # 主成分1を指定
+             top = 10)　# 表示する変数の数を指定
+ggsave(file = "fig5(1).png", width = 6, height = 4, dpi = 300) # ファイルの保存
+
+res.pca$var$contrib %>%
+  kable()
+# y軸に指定されている"var"でres.pcaオブジェクトの要素であるres.pca$varを引数に指定している。
+```
+
+## 主成分2に対する各変数の寄与率を出図
+```{r, message=FALSE, comment=""}
+fviz_contrib(res.pca,  
+             choice = "var",  # 変数ごとの寄与率(ctr)
+             axes = 2,  # 主成分2を指定
+             top = 10)　# 表示する変数の数を指定
+ggsave(file = "fig5(2).png", width = 6, height = 4, dpi = 300) # ファイルの保存
+```
+
+## 主成分3に対する各変数の寄与率を出図
+```{r, message=FALSE, comment=""}
+fviz_contrib(res.pca,  
+             choice = "var",  # 変数ごとの寄与率(ctr)
+             axes = 3,  # 主成分3を指定
+             top = 10)　# 表示する変数の数を指定
+ggsave(file = "fig5(3).png", width = 6, height = 4, dpi = 300) # ファイルの保存
+```
+
+## 主成分4に対する各変数の寄与率を出図
+```{r, message=FALSE, comment=""}
+fviz_contrib(res.pca,  
+             choice = "var",  # 変数ごとの寄与率(ctr)
+             axes = 4,  # 主成分4を指定
+             top = 10)　# 表示する変数の数を指定
+ggsave(file = "fig5(4).png", width = 6, height = 4, dpi = 300) # ファイルの保存
+```
+
+## 主成分5に対する各変数の寄与率を出図
+```{r, message=FALSE, comment=""}
+fviz_contrib(res.pca,  
+             choice = "var",  # 変数ごとの寄与率(ctr)
+             axes = 5,  # 主成分5を指定
+             top = 10)　# 表示する変数の数を指定
+ggsave(file = "fig5(5).png", width = 6, height = 4, dpi = 300) # ファイルの保存
+```
+
+## 主成分得点の散布図を出力
+```{r, message=FALSE, comment=""}
+# 主成分1と2を表示
+fviz_pca_biplot(res.pca) 
+
+# 主成分1と3を表示
+fviz_pca_biplot(res.pca, axes = c(1,3)) 
+
+# 主成分1と4を表示
+fviz_pca_biplot(res.pca, axes = c(1,4)) 
+
+# 主成分1と5を表示
+fviz_pca_biplot(res.pca, axes = c(1,5)) 
+
+# 主成分2と3を表示
+fviz_pca_biplot(res.pca, axes = c(2,3)) 
+
+# 主成分2と4を表示
+fviz_pca_biplot(res.pca, axes = c(2,4))
+
+# 主成分2と5を表示
+fviz_pca_biplot(res.pca, axes = c(2,5)) 
+
+# 主成分3と4を表示
+fviz_pca_biplot(res.pca, axes = c(3,4))
+
+# 主成分3と5を表示
+fviz_pca_biplot(res.pca, axes = c(3,5))
+
+# 主成分4と5を表示
+fviz_pca_biplot(res.pca, axes = c(4,5))
+```
+
+# 陽明文庫所蔵史料の料紙におけるデンプン粒，鉱物，細胞組織，繊維の主成分分析
+```{r, message=FALSE, comment=""}
+tbs3 <- read_csv("yomei-compo.csv")  # CSVファイルの読み取り
+tbs3 # 読み込んだデータ
+
+# 構成物の種類を実数型に変換
+tbs4 <-
+  tbs3 %>%
+  filter(紙素材 %in% "コウゾ") %>%　　　 # コウゾだけを選択
+  select(デンプン粒,鉱物,細胞組織,繊維,ほか) %>%
+  mutate(
+    デンプン粒 = as.numeric(デンプン粒), # デンプン粒を実数に変換
+    鉱物 = as.numeric(鉱物),　　　　　　 # 鉱物を実数に変換
+    細胞組織 = as.numeric(細胞組織),　　 # 細胞組織を実数に変換
+    繊維 = as.numeric(繊維),　　　　　　 # 繊維を実数に変換
+    ほか = as.numeric(ほか))　　　　　　　# ほか（他の物質）を実数に変換
+
+# 主成分分析を行うパッケージFactoMineRを読み込み，主成分分析を実行
+library(FactoMineR)
+# 主成分分析を実行
+res.pca <- 
+  PCA(tbs4,graph = FALSE)
+
+# 多変量解析の可視化に特化したfactoextraパッケージ
+library(factoextra) 
+# 各主成分の寄与率を描画
+fviz_screeplot(res.pca)
+ggsave(file = "fig6.png", width = 6, height = 4, dpi = 300) # ファイルの保存
+
+# 主成分分析の概要を表示
+summary(res.pca)　
+
+res.pca$eig %>%
+  kable()
+# eigenvaluesは主成分の分散，percentage of variancevは寄与率，cumulative percentage of varianceが累積寄与率を示す。スクリープロットを作成するfviz_screeplot()は，自動的にpercentage of varianceをy値に出力する。
+```
+
+## 主成分1に対する各変数の寄与率を出図
+```{r, message=FALSE, comment=""}
+fviz_contrib(res.pca,  
+             choice = "var",  # 変数ごとの寄与率(ctr)
+             axes = 1,  # 主成分1を指定
+             top = 10)　# 表示する変数の数を指定
+ggsave(file = "fig7(1).png", width = 6, height = 4, dpi = 300) # ファイルの保存
+
+res.pca$var$contrib %>%
+  kable()
+# y軸に指定されている"var"でres.pcaオブジェクトの要素であるres.pca$varを引数に指定している。
+```
+
+## 主成分2に対する各変数の寄与率を出図
+```{r, message=FALSE, comment=""}
+fviz_contrib(res.pca,  
+             choice = "var",  # 変数ごとの寄与率(ctr)
+             axes = 2,  # 主成分2を指定
+             top = 10)　# 表示する変数の数を指定
+ggsave(file = "fig7(2).png", width = 6, height = 4, dpi = 300) # ファイルの保存
+```
+
+## 主成分3に対する各変数の寄与率を出図
+```{r, message=FALSE, comment=""}
+fviz_contrib(res.pca,  
+             choice = "var",  # 変数ごとの寄与率(ctr)
+             axes = 3,  # 主成分3を指定
+             top = 10)　# 表示する変数の数を指定
+ggsave(file = "fig7(3).png", width = 6, height = 4, dpi = 300) # ファイルの保存
+```
+
+## 主成分4に対する各変数の寄与率を出図
+```{r, message=FALSE, comment=""}
+fviz_contrib(res.pca,  
+             choice = "var",  # 変数ごとの寄与率(ctr)
+             axes = 4,  # 主成分4を指定
+             top = 10)　# 表示する変数の数を指定
+ggsave(file = "fig7(4).png", width = 6, height = 4, dpi = 300) # ファイルの保存
+```
+
+## 主成分5に対する各変数の寄与率を出図
+```{r, message=FALSE, comment=""}
+fviz_contrib(res.pca,  
+             choice = "var",  # 変数ごとの寄与率(ctr)
+             axes = 5,  # 主成分5を指定
+             top = 10)　# 表示する変数の数を指定
+ggsave(file = "fig7(5).png", width = 6, height = 4, dpi = 300) # ファイルの保存
+```
+
+## 主成分得点の散布図を出力
+```{r, message=FALSE, comment=""}
+# 主成分1と2を表示
+fviz_pca_biplot(res.pca) 
+
+# 主成分1と3を表示
+fviz_pca_biplot(res.pca, axes = c(1,3)) 
+
+# 主成分1と4を表示
+fviz_pca_biplot(res.pca, axes = c(1,4)) 
+
+# 主成分1と5を表示
+fviz_pca_biplot(res.pca, axes = c(1,5)) 
+
+# 主成分2と3を表示
+fviz_pca_biplot(res.pca, axes = c(2,3)) 
+
+# 主成分2と4を表示
+fviz_pca_biplot(res.pca, axes = c(2,4))
+
+# 主成分2と5を表示
+fviz_pca_biplot(res.pca, axes = c(2,5)) 
+
+# 主成分3と4を表示
+fviz_pca_biplot(res.pca, axes = c(3,4))
+
+# 主成分3と5を表示
+fviz_pca_biplot(res.pca, axes = c(3,5))
+
+# 主成分4と5を表示
+fviz_pca_biplot(res.pca, axes = c(4,5))
 ```
