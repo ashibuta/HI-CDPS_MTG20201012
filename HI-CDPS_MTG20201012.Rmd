@@ -2,11 +2,11 @@
 title:  <span style="font-size:12pt">「料紙研究の最新手法と成果」関連データ</span>
 author: <span style="font-size:10pt">渋谷綾子</span> 
 output: 
+ html_document: default
  word_document:
     fig_width: 7
     fig_height: 5
     fig_caption: true
- html_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -16,7 +16,7 @@ knitr::opts_chunk$set(echo = TRUE)
 　このファイルは，2020年10月12日（月）東京大学史料編纂所前近代日本史情報国際センター・画像史料解析センター共同研究会の資料作成に使用したRマークダウンのコードである。  
 　Fig1は、現生標本（イネ，アワ，キビ，ヒエ）と松尾大社社蔵史料で確認された料紙のデンプン粒（イネ，トロロアオイ，種不明）について，Fig2は同じく現生標本と陽明文庫所蔵史料で確認された料紙のデンプン粒（イネ，トロロアオイ，種不明）について，粒径の比較・検討を行い，それぞれの特徴を可視化した。デンプン粒の粒径範囲は標本によって左右されるが（藤本1994），現生標本は渋谷（2010）で計測したデータ（任意で20個抽出）にもとづくものである。松尾大社社蔵史料の料紙におけるデンプン粒は，調査史料63点の撮影箇所における計測結果を用いており，イネ223個，トロロアオイ30個，種不明106個である。陽明文庫所蔵史料の料紙のデンプン粒は，調査史料90点の撮影箇所における計測結果を用いており，イネ329個（函番号11：89個，函番号47：223個，函番号132：17個），トロロアオイ111個（函番号11：49個，函番号47：42個，函番号47：20個），種不明3個（函番号11のみ）である。  
 　Fig3は，松尾大社社蔵史料の年代と細胞組織／柔組織，繊維の含有量について，それぞれ撮影1箇所あたりの計測数を表す。2018年度・2019年度の調査史料63点における含有状況であり，松尾大社のすべての史料を網羅しているわけではないことを断っておく。  
-　Fig4～7は松尾大社社蔵史料・陽明文庫所蔵史料におけるデンプン粒，鉱物，細胞組織，繊維の主成分分析である。
+　Fig4～7は松尾大社社蔵史料・陽明文庫所蔵史料におけるデンプン粒，鉱物，細胞組織，繊維の主成分分析の結果を示している。
 <p>
 
 ```{r, message=FALSE, comment=""}
@@ -158,9 +158,9 @@ res.pca$eig %>%
 ```{r, message=FALSE, comment=""}
 fviz_contrib(res.pca,  
              choice = "var",  # 変数ごとの寄与率(ctr)
-             axes = 1,  # 主成分1を指定
-             top = 10)　# 表示する変数の数を指定
-ggsave(file = "fig5(1).png", width = 6, height = 4, dpi = 300) # ファイルの保存
+             axes = 1,        # 主成分1を指定
+             top = 10)　      # 表示する変数の数を指定
+ggsave(file = "fig5-1.png", width = 6, height = 4, dpi = 300) # ファイルの保存
 
 res.pca$var$contrib %>%
   kable()
@@ -173,7 +173,7 @@ fviz_contrib(res.pca,
              choice = "var",  # 変数ごとの寄与率(ctr)
              axes = 2,  # 主成分2を指定
              top = 10)　# 表示する変数の数を指定
-ggsave(file = "fig5(2).png", width = 6, height = 4, dpi = 300) # ファイルの保存
+ggsave(file = "fig5-2.png", width = 6, height = 4, dpi = 300) # ファイルの保存
 ```
 
 ## 主成分3に対する各変数の寄与率を出図
@@ -182,7 +182,7 @@ fviz_contrib(res.pca,
              choice = "var",  # 変数ごとの寄与率(ctr)
              axes = 3,  # 主成分3を指定
              top = 10)　# 表示する変数の数を指定
-ggsave(file = "fig5(3).png", width = 6, height = 4, dpi = 300) # ファイルの保存
+ggsave(file = "fig5-3.png", width = 6, height = 4, dpi = 300) # ファイルの保存
 ```
 
 ## 主成分4に対する各変数の寄与率を出図
@@ -191,7 +191,7 @@ fviz_contrib(res.pca,
              choice = "var",  # 変数ごとの寄与率(ctr)
              axes = 4,  # 主成分4を指定
              top = 10)　# 表示する変数の数を指定
-ggsave(file = "fig5(4).png", width = 6, height = 4, dpi = 300) # ファイルの保存
+ggsave(file = "fig5-4.png", width = 6, height = 4, dpi = 300) # ファイルの保存
 ```
 
 ## 主成分5に対する各変数の寄与率を出図
@@ -200,7 +200,7 @@ fviz_contrib(res.pca,
              choice = "var",  # 変数ごとの寄与率(ctr)
              axes = 5,  # 主成分5を指定
              top = 10)　# 表示する変数の数を指定
-ggsave(file = "fig5(5).png", width = 6, height = 4, dpi = 300) # ファイルの保存
+ggsave(file = "fig5-5.png", width = 6, height = 4, dpi = 300) # ファイルの保存
 ```
 
 ## 主成分得点の散布図を出力
@@ -279,7 +279,7 @@ fviz_contrib(res.pca,
              choice = "var",  # 変数ごとの寄与率(ctr)
              axes = 1,  # 主成分1を指定
              top = 10)　# 表示する変数の数を指定
-ggsave(file = "fig7(1).png", width = 6, height = 4, dpi = 300) # ファイルの保存
+ggsave(file = "fig7-1.png", width = 6, height = 4, dpi = 300) # ファイルの保存
 
 res.pca$var$contrib %>%
   kable()
@@ -292,7 +292,7 @@ fviz_contrib(res.pca,
              choice = "var",  # 変数ごとの寄与率(ctr)
              axes = 2,  # 主成分2を指定
              top = 10)　# 表示する変数の数を指定
-ggsave(file = "fig7(2).png", width = 6, height = 4, dpi = 300) # ファイルの保存
+ggsave(file = "fig7-2.png", width = 6, height = 4, dpi = 300) # ファイルの保存
 ```
 
 ## 主成分3に対する各変数の寄与率を出図
@@ -301,7 +301,7 @@ fviz_contrib(res.pca,
              choice = "var",  # 変数ごとの寄与率(ctr)
              axes = 3,  # 主成分3を指定
              top = 10)　# 表示する変数の数を指定
-ggsave(file = "fig7(3).png", width = 6, height = 4, dpi = 300) # ファイルの保存
+ggsave(file = "fig7-3.png", width = 6, height = 4, dpi = 300) # ファイルの保存
 ```
 
 ## 主成分4に対する各変数の寄与率を出図
@@ -310,7 +310,7 @@ fviz_contrib(res.pca,
              choice = "var",  # 変数ごとの寄与率(ctr)
              axes = 4,  # 主成分4を指定
              top = 10)　# 表示する変数の数を指定
-ggsave(file = "fig7(4).png", width = 6, height = 4, dpi = 300) # ファイルの保存
+ggsave(file = "fig7-4.png", width = 6, height = 4, dpi = 300) # ファイルの保存
 ```
 
 ## 主成分5に対する各変数の寄与率を出図
@@ -319,7 +319,7 @@ fviz_contrib(res.pca,
              choice = "var",  # 変数ごとの寄与率(ctr)
              axes = 5,  # 主成分5を指定
              top = 10)　# 表示する変数の数を指定
-ggsave(file = "fig7(5).png", width = 6, height = 4, dpi = 300) # ファイルの保存
+ggsave(file = "fig7-5.png", width = 6, height = 4, dpi = 300) # ファイルの保存
 ```
 
 ## 主成分得点の散布図を出力
