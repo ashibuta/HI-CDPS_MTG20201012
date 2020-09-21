@@ -179,7 +179,7 @@ res.pca$var$contrib %>%
 fviz_pca_biplot(res.pca) # 主成分1と2を表示，axes = C(○,○))で別の主成分を表示可能
 ggsave(file = "fig6.png", width = 6, height = 4, dpi = 300) # ファイルの保存
 ```
-填料は左側，素材由来の構成物は右側にプロット。素材由来の構成物が特徴的に多い。  
+細胞組織の断片と繊維は同じ意味をもつ変数，すなわち素材由来の構成物であり，デンプン粒と鉱物，ほか（他の物質）は填料を示すといえる。
 
 # 陽明文庫所蔵史料の料紙における構成物の主成分分析
 ```{r, message=FALSE, comment=""}
@@ -218,14 +218,14 @@ res.pca$eig %>%
 # eigenvaluesは主成分の分散，percentage of variancevは寄与率，cumulative percentage of varianceが累積寄与率を示す
 # スクリープロットを作成するfviz_screeplot()は，自動的にpercentage of varianceをy値に出力する
 ```
-第1主成分が27％超，第2主成分も合わせると90％近い。  
+第1主成分が27％超，第2主成分も合わせると80％近い。  
 
 ## 主成分に対する各変数の寄与率を出図
 ```{r, message=FALSE, comment=""}
 fviz_contrib(res.pca,  
              choice = "var",  # 変数ごとの寄与率(ctr)
-             axes = 1,  # 主成分1を指定（変更すると各主成分が指定できる）
-             top = 10)　# 表示する変数の数を指定
+             axes = 1,        # 主成分1を指定（変更すると各主成分が指定できる）
+             top = 10)　      # 表示する変数の数を指定
 ggsave(file = "fig8.png", width = 6, height = 4, dpi = 300) # ファイルの保存
 
 res.pca$var$contrib %>%
@@ -239,7 +239,7 @@ res.pca$var$contrib %>%
 fviz_pca_biplot(res.pca) # 主成分1と2を表示，axes = C(○,○))で別の主成分を表示可能
 ggsave(file = "fig9.png", width = 6, height = 4, dpi = 300) # ファイルの保存
 ```
-左側に素材由来の細胞組織，右側に填料などがプロット。素材由来の構成物が顕著に多い。  
+デンプン粒と鉱物は，同じ意味を持つ変数，すなわち填料であるといえる。細胞組織の断片，繊維とほか（他の物質）は異なる変数を示すため，素材由来の構成物だけの含有ではないことが読み取れる。
 
 # 陽明文庫所蔵史料の料紙面積と構成物の相関分析（無相関検定）
 帰無仮説H₀：母相関は0である「調査史料では料紙面積と構成物に相関がない」
@@ -260,7 +260,7 @@ tbs6 <-
 attach(tbs6)
 
 cor(構成物合計,料紙面積, method="spearman") 　　 # スピアマンの相関係数
-cor.test(構成物合計,料紙面積, method="pearson") 　# 無相関かどうかの検定 
+cor.test(構成物合計,料紙面積, method="pearson")  # 無相関かどうかの検定 
 
 plot(構成物合計,料紙面積, xlim=c(0,270), ylim=c(0,2700)) # xlimとylimで範囲を指定
 # 回帰直線を入れる場合は以下を追加
