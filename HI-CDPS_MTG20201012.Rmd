@@ -273,6 +273,10 @@ abline(lm(構成物合計~料紙面積), col="red") # 回帰直線を入れる�
 
 ## 松尾大社社蔵史料の料紙構成物
 ```{r, message=FALSE, comment=""}
+# 因子分析を行うパッケージを読み込む
+library(psych)
+library(GPArotation)
+
 tbs7<- read_csv("matsunoo-compo.csv")  # CSVファイルの読み取り
 tbs7 # 読み込んだデータ
 
@@ -292,20 +296,15 @@ tbs8 <-
 相関行列 <- cor(tbs8)
 相関行列
 
-# 構成物の因子分析を実施
-eigen(相関行列) # 固有値を算出し因子数を決定（2に決定）
-構成物因子分析 <- factanal(tbs8,factors=2) # 因子分析を実施
-構成物因子分析
+# 因子数を決める
+fa.parallel(tbs8,SMC=TRUE)
+VSS(tbs8)
+# 結果として，平行分析では3因子，MAP法では1因子，適合度基準（BIC）では2因子が良い。ここでは2因子で決める。
 
-共通性 <- 1-構成物因子分析$uniquenesses # 共通性を表示
-共通性
+# 因子分析を行う
+fa.result1 <- fa(tbs8,nfactors=2,fm="ML")
+print(fa.result1, sort=T, cut=0.3) # 因子負荷量が小さなところを表示しない
 
-# 因子負荷が小さい値でも0である場合を除いて表示，因子ごとに因子負荷の高い項目をまとめて並べる
-print(構成物因子分析,cutoff=0,sort=TRUE) 
-
-# 構成物の因子分析を実施，プロマックス回転で因子間に相関をもたせる
-構成物因子分析斜交 <- factanal(tbs8,factors=2,rotation="promax")
-print(構成物因子分析斜交,cutoff=0,sort=TRUE)
 ```
 
 ## 陽明文庫所蔵史料の料紙構成物
@@ -329,18 +328,13 @@ tbs10 <-
 相関行列 <- cor(tbs10)
 相関行列
 
-# 構成物の因子分析を実施
-eigen(相関行列) # 固有値を算出し因子数を決定（2に決定）
-構成物因子分析 <- factanal(tbs10,factors=2) # 因子分析を実施
-構成物因子分析
+# 因子数を決める
+fa.parallel(tbs10,SMC=TRUE)
+VSS(tbs10)
+# 結果として，平行分析では3因子，MAP法では1因子，適合度基準（BIC）では2因子が良い。ここでは2因子で決める。
 
-共通性 <- 1-構成物因子分析$uniquenesses # 共通性を表示
-共通性
+# 因子分析を行う
+fa.result2 <- fa(tbs10,nfactors=2,fm="ML")
+print(fa.result2, sort=T, cut=0.3) # 因子負荷量が小さなところを表示しない
 
-# 因子負荷が小さい値でも0である場合を除いて表示，因子ごとに因子負荷の高い項目をまとめて並べる
-print(構成物因子分析,cutoff=0,sort=TRUE) 
-
-# 構成物の因子分析を実施，プロマックス回転で因子間に相関をもたせる
-構成物因子分析斜交 <- factanal(tbs10,factors=2,rotation="promax")
-print(構成物因子分析斜交,cutoff=0,sort=TRUE)
 ```
