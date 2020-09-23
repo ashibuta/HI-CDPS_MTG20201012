@@ -1,12 +1,12 @@
 ---
 title:  <span style="font-size:12pt">「料紙研究の最新手法と成果」関連データ</span>
-author: <span style="font-size:10pt">渋谷綾子</span> 
+author: <span style="font-size:10pt">渋谷 綾子</span> 
 output: 
- html_document: default
  word_document:
     fig_width: 7
     fig_height: 5
     fig_caption: true
+ html_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -298,12 +298,18 @@ tbs8 <-
 
 # 因子数を決める
 fa.parallel(tbs8,SMC=TRUE)
-VSS(tbs8)
+vss(tbs8, n.obs=N, rotate="varimax") 
 # 結果として，平行分析では3因子，MAP法では1因子，適合度基準（BIC）では2因子が良い。ここでは2因子で決める。
 
 # 因子分析を行う
 fa.result1 <- fa(tbs8,nfactors=2,fm="ML")
 print(fa.result1, sort=T, cut=0.3) # 因子負荷量が小さなところを表示しない
+
+# 因子負荷量の表示
+unclass(fa.result1$loadings)
+
+# 描画
+biplot(fa.result1$scores,fa.result1$loading,cex=2)
 
 ```
 
@@ -330,11 +336,16 @@ tbs10 <-
 
 # 因子数を決める
 fa.parallel(tbs10,SMC=TRUE)
-VSS(tbs10)
+vss(tbs10, n.obs=N, rotate="varimax")
 # 結果として，平行分析では3因子，MAP法では1因子，適合度基準（BIC）では2因子が良い。ここでは2因子で決める。
 
 # 因子分析を行う
 fa.result2 <- fa(tbs10,nfactors=2,fm="ML")
 print(fa.result2, sort=T, cut=0.3) # 因子負荷量が小さなところを表示しない
 
+# 因子負荷量の表示
+unclass(fa.result2$loadings)
+
+# 描画
+biplot(fa.result2$scores,fa.result2$loading,cex=2)
 ```
