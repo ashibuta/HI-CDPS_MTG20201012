@@ -297,20 +297,23 @@ tbs8 <-
 相関行列
 
 # 因子数を決める
-fa.parallel(tbs8,SMC=TRUE)
-vss(tbs8, n.obs=N, rotate="varimax") 
-# 結果として，平行分析では3因子，MAP法では1因子，適合度基準（BIC）では2因子が良い。ここでは2因子で決める。
+fa.parallel(tbs8,SMC=TRUE) # スクリープロットを表示
+vss(tbs8, n.obs=N, rotate="varimax")
+# 結果として，平行分析では3因子，MAP法では1因子，適合度基準（BIC）では2因子が良い。ここでは3因子で決める。
 
 # 因子分析を行う
-fa.result1 <- fa(tbs8,nfactors=2,fm="ML")
-print(fa.result1, sort=T, cut=0.3) # 因子負荷量が小さなところを表示しない
+fa.result1 <- fa(tbs8,nfactors=3,fm="ML")
+print(fa.result1, sort=T, cut=0.3) # 因子負荷が0.3以下の値を非表示
+
+# 因子負荷の可視化
+fa.result1 = fa(tbs8, nfactors=3, fm="minres",rotate="oblimin",use="complete.obs")
+fa.diagram(fa.result1)
 
 # 因子負荷量の表示
 unclass(fa.result1$loadings)
 
 # 描画
-biplot(fa.result1$scores,fa.result1$loading,cex=2)
-
+biplot(fa.result1$scores,fa.result1$loading,cex=1)
 ```
 
 ## 陽明文庫所蔵史料の料紙構成物
@@ -335,17 +338,21 @@ tbs10 <-
 相関行列
 
 # 因子数を決める
-fa.parallel(tbs10,SMC=TRUE)
+fa.parallel(tbs10,SMC=TRUE) # スクリープロットを表示
 vss(tbs10, n.obs=N, rotate="varimax")
-# 結果として，平行分析では3因子，MAP法では1因子，適合度基準（BIC）では2因子が良い。ここでは2因子で決める。
+# 結果として，平行分析では3因子，MAP法では1因子，適合度基準（BIC）では2因子が良い。ここでは3因子で決める。
 
 # 因子分析を行う
-fa.result2 <- fa(tbs10,nfactors=2,fm="ML")
-print(fa.result2, sort=T, cut=0.3) # 因子負荷量が小さなところを表示しない
+fa.result2 <- fa(tbs10,nfactors=3,fm="ML")
+print(fa.result2, sort=T, cut=0.3) # 因子負荷が0.3以下の値を非表示
+
+# 因子負荷の可視化
+fa.result2 = fa(tbs8, nfactors=3, fm="minres",rotate="oblimin",use="complete.obs")
+fa.diagram(fa.result2)
 
 # 因子負荷量の表示
 unclass(fa.result2$loadings)
 
 # 描画
-biplot(fa.result2$scores,fa.result2$loading,cex=2)
+biplot(fa.result2$scores,fa.result2$loading,cex=1)
 ```
