@@ -79,7 +79,7 @@ ggplot(starch, aes(x = デンプン粒の種類, y = 粒径範囲)) +
   stat_summary(geom="pointrange",fun = mean, fun.min = function(x) mean(x)-sd(x), 
                fun.max = function(x) mean(x)+sd(x), size=.5,alpha=.5)+ # 平均値±標準偏差をプロット
   stat_summary(fun.data = n_fun, geom = "text",colour="black",size=4)+ # 各グループのデータ数を最大値の位置に追加
-  scale_y_continuous(breaks = c(0,10,20,30), limits = c(0,30), expand = c(0,0))+ # 数値軸の目盛りを指定
+  scale_y_continuous(breaks = c(0,10,20,30,40,50), limits = c(0,50), expand = c(0,0))+ # 数値軸の目盛りを指定
   scale_x_discrete(limit=c("トロロアオイ_函11","トロロアオイ_函47","トロロアオイ_函132","種不明_函11","イネ_函11","イネ_函47","イネ_函132","現生イネ","現生アワ","現生キビ","現生ヒエ")) + # 文字軸の順番を指定
   coord_flip() +　# 90度横向きにする
   labs(x = "デンプン粒の種類", y = "粒径範囲（μm）") + # ラベルの指定
@@ -256,7 +256,7 @@ tbs6 <-
     面積 = as.numeric(料紙面積), 　　　　# 料紙面積を実数に変換
     構成物合計 = as.numeric(構成物合計)) # 構成物合計を実数に変換
 
-# 料紙面積と構成物合計の相関計数と無相関検定
+# 料紙面積と構成物合計の相関係数と無相関検定
 attach(tbs6)
 
 cor(構成物合計,料紙面積, method="spearman") 　　 # スピアマンの相関係数
