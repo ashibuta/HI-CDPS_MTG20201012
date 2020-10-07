@@ -47,7 +47,7 @@ return(data.frame(y = max(x)+3.5, label = paste0("n = ",length(x))))
 }
 
 ggplot(starch, aes(x = デンプン粒の種類, y = 粒径範囲)) +
-  geom_violin(trim=T,fill="#FF8223",linetype="blank",alpha=I(1/3),adjust=2.5)+ # バイオリンプロット作成
+  geom_violin(trim=T,fill="#70D2FF",linetype="blank",alpha=I(1/3),adjust=2.5)+ # バイオリンプロット作成
   stat_summary(geom="pointrange",fun = mean, fun.min = function(x) mean(x)-sd(x), 
                fun.max = function(x) mean(x)+sd(x), size=.5,alpha=.5)+ # 平均値±標準偏差をプロット
   stat_summary(fun.data = n_fun, geom = "text",colour="black",size=4)+ # 各グループのデータ数を最大値の位置に追加
@@ -75,7 +75,7 @@ return(data.frame(y = max(x)+2.5, label = paste0("n = ",length(x))))
 }
 
 ggplot(starch, aes(x = デンプン粒の種類, y = 粒径範囲)) +
-  geom_violin(trim=T,fill="#FF8223",linetype="blank",alpha=I(1/3),adjust=2.5)+ # バイオリンプロット作成
+  geom_violin(trim=T,fill="#70D2FF",linetype="blank",alpha=I(1/3),adjust=2.5)+ # バイオリンプロット作成
   stat_summary(geom="pointrange",fun = mean, fun.min = function(x) mean(x)-sd(x), 
                fun.max = function(x) mean(x)+sd(x), size=.5,alpha=.5)+ # 平均値±標準偏差をプロット
   stat_summary(fun.data = n_fun, geom = "text",colour="black",size=4)+ # 各グループのデータ数を最大値の位置に追加
